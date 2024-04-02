@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-// import snowImage from './assets/a snow blizzard plun.jpg'; // Import the snow image
-// import cloudsImage from './assets/a cloudy sad day.jpg'; // Import the clouds image
-// import rainImage from './assets/a stormy rainy day.jpg'; // Import the rain image
-// import clearImage from './assets/beautiful day with.jpg';
-// import defaultImage from './assets/snowy mountains meet.jpg';
+import clearImage from '../assets/clear.jpg'; // Imported my images
+import cloudsImage from "../assets/cloud.jpg";
+import rainImage from "../assets/rain.jpg";
+import snowImage from "../assets/snow.jpg";
 
 function Main() {
   const [location, setLocation] = useState("Dallas");
@@ -38,15 +37,15 @@ function Main() {
   const getBackgroundImage = (weatherCondition) => {
     switch (weatherCondition) {
       case "clear":
-        return `url(./assets/beautiful day with.jpg)`;
+        return `url(${clearImage})`; // Use imported image
       case "clouds":
-        return `url(./assets/a cloudy sad day.jpg)`;
+        return `url(${cloudsImage})`;
       case "rain":
-        return `url(./assets/a stormy rainy day.jpg)`;
+        return `url(${rainImage})`;
       case "snow":
-        return `url(./assets/a snow blizzard plun.jpg)`;
+        return `url(${snowImage})`;
       default:
-        return `url(./assets/snowy mountains meet.jpg)`;
+        return `url(${clearImage})`; // Default to clear image if no match
     }
   };
 

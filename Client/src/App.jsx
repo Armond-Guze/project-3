@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Nav from './components/Nav';
 import Main from './components/Main';
 // import About from './components/About';
@@ -14,7 +14,7 @@ function App() {
   return (
     <Router>
       <Nav />
-      <Switch>
+      <Routes>
         <Route path="/" exact component={Main} />
         <Route path="/"component={HomePage}/>
         <Route path="/"component={FavoritePage}/>
@@ -23,7 +23,7 @@ function App() {
         {/* <Route path="/contact" component={Contact} /> */}
         <Route path="/login" component={LoginPage} />
         <Route path="/signup" component={SignupPage} />
-      </Switch>
+      </Routes>
     </Router>
   );
 }

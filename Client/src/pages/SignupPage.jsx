@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { signup } from "../utils/auth";
 
 function SignupPage() {
@@ -22,7 +22,7 @@ function SignupPage() {
       // Call signup function from auth.js to register the user
       await signup(formData);
       // Redirect to login page after successful registration
-      history.push("/login");
+    //   history.push("/login");
     } catch (error) {
       console.error("Error signing up:", error);
     }

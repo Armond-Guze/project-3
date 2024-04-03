@@ -1,17 +1,25 @@
 import React from 'react';
-const Nav = () => {
+
+
+const Navbar = () => {
   return (
-    <nav className="bg-yellow-500 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="text-white font-bold">Logo</div>
-        <div className="flex items-center">
-          <a href="#" className="text-white mr-4 hover:text-gray-200">Home</a>
-          <a href="#" className="text-white mr-4 hover:text-gray-200">About</a>
-          <a href="#" className="text-white mr-4 hover:text-gray-200">Services</a>
-          <a href="#" className="text-white mr-4 hover:text-gray-200">Contact</a>
-        </div>
+    <nav className="bg-gray-800 p-6">
+      <div className="max-w-7xl mx-auto flex justify-between items-center">
+       
+        <a href="/" className="text-white font-bold text-xl lg:text-2xl">Trip Junkie</a>
+
+      
+        <ul className="flex space-x-6">
+          <li><a href="/" className="text-white hover:text-gray-300 text-lg">Home</a></li>
+          <li><a href="/travel" className="text-white hover:text-gray-300 text-lg">Travel</a></li>
+          <li><a href="/weather" className="text-white hover:text-gray-300 text-lg">Weather</a></li>
+          <li><a href="/contact" className="text-white hover:text-gray-300 text-lg">Contact</a></li>
+        </ul>
+
+       
       </div>
     </nav>
   );
 };
-export default Nav;
+
+export default Navbar;

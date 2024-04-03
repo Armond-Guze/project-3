@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import { login, logout } from "../utils/auth"; // Import logout function from auth.js
 
 function LoginPage() {
@@ -8,7 +8,7 @@ function LoginPage() {
     password: ""
   });
 
-  const history = useHistory();
+//   const history = useHistory();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,22 +21,22 @@ function LoginPage() {
       // Call login function from auth.js to authenticate the user
       await login(formData);
       // Redirect to home page after successful login
-      history.push("/");
+    //   history.push("/");
     } catch (error) {
       console.error("Error logging in:", error);
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      // Call logout function from auth.js to log the user out
-      await logout();
-      // Redirect to login page after successful logout
-      history.push("/login");
-    } catch (error) {
-      console.error("Error logging out:", error);
-    }
-  };
+//   const handleLogout = async () => {
+//     try {
+//       // Call logout function from auth.js to log the user out
+//       await logout();
+//     //   Redirect to login page after successful logout
+//     //   history.push("/login");
+//     } catch (error) {
+//       console.error("Error logging out:", error);
+//     }
+//   };
 
   return (
     <div>
@@ -61,7 +61,7 @@ function LoginPage() {
           />
         </div>
         <button type="submit">Login</button>
-        <button type="button" onClick={handleLogout}>Logout</button> {/* Include logout button */}
+     
       </form>
     </div>
   );

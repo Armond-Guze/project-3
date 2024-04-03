@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Nav from './components/Nav';
 import Main from './components/Main';
 // import About from './components/About';
@@ -7,19 +7,23 @@ import Main from './components/Main';
 // import Contact from './components/Contact';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import HomePage from './pages/HomePage';
+import FavoritePage from './pages/FavoritePage';
 
 function App() {
   return (
     <Router>
       <Nav />
-      <Switch>
+      <Routes>
         <Route path="/" exact component={Main} />
-        <Route path="/about" component={About} />
-        <Route path="/services" component={Services} />
-        <Route path="/contact" component={Contact} />
+        <Route path="/"component={HomePage}/>
+        <Route path="/"component={FavoritePage}/>
+        {/* <Route path="/about" component={About} /> */}
+        {/* <Route path="/services" component={Services} /> */}
+        {/* <Route path="/contact" component={Contact} /> */}
         <Route path="/login" component={LoginPage} />
         <Route path="/signup" component={SignupPage} />
-      </Switch>
+      </Routes>
     </Router>
   );
 }

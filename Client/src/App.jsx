@@ -7,6 +7,8 @@ import Main from './components/Main';
 // import Contact from './components/Contact';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import HomePage from './pages/HomePage';
+import FavoritePage from './pages/FavoritePage';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
       <Nav />
       <Switch>
         <Route path="/" exact component={Main} />
+        <Route path="/"component={HomePage}/>
+        <Route path="/"component={FavoritePage}/>
         {/* <Route path="/about" component={About} /> */}
         {/* <Route path="/services" component={Services} /> */}
         {/* <Route path="/contact" component={Contact} /> */}

@@ -1,25 +1,22 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Import Link component for routing
 
-
-const Navbar = () => {
+const Nav = () => {
   return (
-    <nav className="bg-gray-800 p-6">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-       
-        <a href="/" className="text-white font-bold text-xl lg:text-2xl">Trip Junkie</a>
-
-      
-        <ul className="flex space-x-6">
-          <li><a href="/" className="text-white hover:text-gray-300 text-lg">Home</a></li>
-          <li><a href="/travel" className="text-white hover:text-gray-300 text-lg">Travel</a></li>
-          <li><a href="/weather" className="text-white hover:text-gray-300 text-lg">Weather</a></li>
-          <li><a href="/contact" className="text-white hover:text-gray-300 text-lg">Contact</a></li>
-        </ul>
-
-       
+    <nav className="bg-yellow-500 p-4">
+      <div className="container mx-auto flex justify-between items-center">
+        <div className="text-white font-bold">Logo</div>
+        <div className="flex items-center">
+          <Link to="/" className="text-white mr-4 hover:text-gray-200">Home</Link>
+          <Link to="/about" className="text-white mr-4 hover:text-gray-200">About</Link>
+          <Link to="/services" className="text-white mr-4 hover:text-gray-200">Services</Link>
+          <Link to="/contact" className="text-white mr-4 hover:text-gray-200">Contact</Link>
+          <Link to="/login" className="text-white mr-4 hover:text-gray-200">Login</Link> {/* Link to login page */}
+          <Link to="/signup" className="text-white mr-4 hover:text-gray-200">Signup</Link> {/* Link to signup page */}
+        </div>
       </div>
     </nav>
   );
 };
 
-export default Navbar;
+export default Nav;

@@ -1,8 +1,8 @@
 import React from 'react'
 
-const GameList = () => {
+const DestinationList = () => {
   return (
-    <div>GameList</div>
+    <div>DestinationList</div>
   )
 }
 

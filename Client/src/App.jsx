@@ -1,14 +1,14 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Nav from './components/Nav';
-import Main from './components/Main';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Nav from "./components/Nav";
+import Main from "./components/Main";
 // import About from './components/About';
 // import Services from './components/Services';
 // import Contact from './components/Contact';
-import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
-import HomePage from './pages/HomePage';
-import FavoritePage from './pages/FavoritePage';
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import HomePage from "./pages/HomePage";
+import FavoritePage from "./pages/FavoritePage";
 
 function App() {
   return (
@@ -16,8 +16,8 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" exact component={Main} />
-        <Route path="/"component={HomePage}/>
-        <Route path="/"component={FavoritePage}/>
+        <Route path="/" component={HomePage} />
+        <Route path="/" component={FavoritePage} />
         {/* <Route path="/about" component={About} /> */}
         {/* <Route path="/services" component={Services} /> */}
         {/* <Route path="/contact" component={Contact} /> */}
@@ -29,7 +29,6 @@ function App() {
 }
 
 export default App;
-
 
 // this is our homepage
 

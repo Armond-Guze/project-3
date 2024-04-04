@@ -1,30 +1,32 @@
-import React, { useState } from "react";
-// import { useHistory } from "react-router-dom";
-import { login, logout } from "../utils/auth"; // Import logout function from auth.js
+import { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { Link } from 'react-router-dom';
+import { LOGIN } from '../utils/mutations';
+import Auth from '../utils/auth';
 
-function LoginPage() {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: ""
-  });
+function Login(props) {
+  const [formState, setFormState] = useState({ email: '', password: '' });
+  const [login, { error }] = useMutation(LOGIN);
 
-//   const history = useHistory();
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const mutationResponse = await login({
+        variables: { email: formState.email, password: formState.password },
+      });
+      const token = mutationResponse.data.login.token;
+      Auth.login(token);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      // Call login function from auth.js to authenticate the user
-      await login(formData);
-      // Redirect to home page after successful login
-    //   history.push("/");
-    } catch (error) {
-      console.error("Error logging in:", error);
-    }
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
   };
 
 //   const handleLogout = async () => {

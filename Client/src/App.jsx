@@ -1,36 +1,70 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+
 import Nav from './components/Nav';
-import Main from './components/Main';
-// import About from './components/About';
-// import Services from './components/Services';
-// import Contact from './components/Contact';
-import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
-import HomePage from './pages/HomePage';
-import FavoritePage from './pages/FavoritePage';
+
+
+
+const httpLink = createHttpLink({
+  uri: '/graphql',
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('id_token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
 
 function App() {
   return (
-    <Router>
-      <Nav />
-      <Routes>
-        <Route path="/" exact component={Main} />
-        <Route path="/"component={HomePage}/>
-        <Route path="/"component={FavoritePage}/>
-        {/* <Route path="/about" component={About} /> */}
-        {/* <Route path="/services" component={Services} /> */}
-        {/* <Route path="/contact" component={Contact} /> */}
-        <Route path="/login" component={LoginPage} />
-        <Route path="/signup" component={SignupPage} />
-      </Routes>
-    </Router>
+    <ApolloProvider client={client}>
+    
+        <Nav />
+        <Outlet />
+    
+    </ApolloProvider>
   );
 }
 
 export default App;
 
 
-// this is our homepage
 
-// had to install/run "npm install react-router-dom"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,26 +1,29 @@
-// const typeDefs = `
-//   type Tech {
-//     _id: ID!
-//     name: String!
-//   }
+const typeDefs = `#graphql
+type User {
+    id: ID!
+    username: String!,
+    email: String!
+}
 
-//   type Matchup {
-//     _id: ID!
-//     tech1: String!
-//     tech2: String!
-//     tech1_votes: Int
-//     tech2_votes: Int
-//   }
+type AuthSuccess {
+    token: String!
+    user: User!
+}
+ 
+  type Query {
+    me: User!
+  }
 
-//   type Query {
-//     tech: [Tech]
-//     matchups(_id: String): [Matchup]
-//   }
+  type Mutation {
+    createUser(
+        username: String!,
+        email: String!,
+        password: String!
+    ): AuthSuccess!
 
-//   type Mutation {
-//     createMatchup(tech1: String!, tech2: String!): Matchup
-//     createVote(_id: String!, techNum: Int!): Matchup
-//   }
-// `;
+    login(email: String!, password: String!): AuthSuccess!
+    
+  }
+`;
 
-// module.exports = typeDefs;
+module.exports = typeDefs;

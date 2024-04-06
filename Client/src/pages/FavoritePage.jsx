@@ -28,7 +28,7 @@ const FavoritePage = () => {
       {favoriteDestinations.length > 0 ? (
         <ul>
           {favoriteDestinations.map(destination => (
-            <li key={destination._id} className="text-lg mb-2">
+            <li key={destination.id} className="text-lg mb-2">
               {destination.name}
             </li>
           ))}

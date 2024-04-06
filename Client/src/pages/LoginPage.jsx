@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { LOGIN } from '../utils/mutations';
 import Auth from '../utils/auth';
 
-function Login(props) {
+function LoginPage(props) {
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [login, { error }] = useMutation(LOGIN);
 
@@ -43,13 +43,13 @@ function Login(props) {
   return (
     <div>
       <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleFormSubmit}>
         <div>
           <label>Email:</label>
           <input
             type="email"
             name="email"
-            value={formData.email}
+            value={formState.email}
             onChange={handleChange}
           />
         </div>
@@ -58,7 +58,7 @@ function Login(props) {
           <input
             type="password"
             name="password"
-            value={formData.password}
+            value={formState.password}
             onChange={handleChange}
           />
         </div>

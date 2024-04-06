@@ -4,8 +4,8 @@ import { useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
 import { ADD_USER } from '../utils/mutations';
 
-function Signup(props) {
-  const [formState, setFormState] = useState({ email: '', password: '' });
+function SignupPage(props) {
+  const [formState, setFormState] = useState({ email: '', password: '', username: '' });
   const [addUser] = useMutation(ADD_USER);
 
   const handleFormSubmit = async (event) => {
@@ -14,8 +14,7 @@ function Signup(props) {
       variables: {
         email: formState.email,
         password: formState.password,
-        firstName: formState.firstName,
-        lastName: formState.lastName,
+        username: formState.username,
       },
     });
     const token = mutationResponse.data.addUser.token;
@@ -33,13 +32,13 @@ function Signup(props) {
   return (
     <div>
       <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleFormSubmit}>
         <div>
           <label>Username:</label>
           <input
             type="text"
             name="username"
-            value={formData.username}
+            value={formState.username}
             onChange={handleChange}
           />
         </div>
@@ -48,7 +47,7 @@ function Signup(props) {
           <input
             type="email"
             name="email"
-            value={formData.email}
+            value={formState.email}
             onChange={handleChange}
           />
         </div>
@@ -57,7 +56,7 @@ function Signup(props) {
           <input
             type="password"
             name="password"
-            value={formData.password}
+            value={formState.password}
             onChange={handleChange}
           />
         </div>
@@ -68,3 +67,4 @@ function Signup(props) {
 }
 
 export default SignupPage;
+

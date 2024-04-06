@@ -37,7 +37,7 @@ function Weather() {
   const getBackgroundImage = (weatherCondition) => {
     switch (weatherCondition) {
       case "clear":
-        return `url(${clearImage})`; // Use imported image
+        return `url(${clearImage})`; // Used imported image
       case "clouds":
         return `url(${cloudsImage})`;
       case "rain":

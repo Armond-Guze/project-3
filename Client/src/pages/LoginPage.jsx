@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
-import { LOGIN } from '../utils/mutations';
+import { useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
+import { LOGIN } from '../utils/mutations';
 
-function Login(props) {
+function LoginPage(props) {
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [login, { error }] = useMutation(LOGIN);
 
@@ -16,8 +16,8 @@ function Login(props) {
       });
       const token = mutationResponse.data.login.token;
       Auth.login(token);
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -43,13 +43,13 @@ function Login(props) {
   return (
     <div>
       <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleFormSubmit}>
         <div>
           <label>Email:</label>
           <input
             type="email"
             name="email"
-            value={formData.email}
+            value={formState.email}
             onChange={handleChange}
           />
         </div>
@@ -58,7 +58,7 @@ function Login(props) {
           <input
             type="password"
             name="password"
-            value={formData.password}
+            value={formState.password}
             onChange={handleChange}
           />
         </div>

@@ -5,7 +5,7 @@ import cloudsImage from "../assets/cloud.jpg";
 import rainImage from "../assets/rain.jpg";
 import snowImage from "../assets/snow.jpg";
 
-function Main() {
+function Weather() {
   const [location, setLocation] = useState("Dallas");
   const [weatherData, setWeatherData] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -37,7 +37,7 @@ function Main() {
   const getBackgroundImage = (weatherCondition) => {
     switch (weatherCondition) {
       case "clear":
-        return `url(${clearImage})`; // Use imported image
+        return `url(${clearImage})`; // Used imported image
       case "clouds":
         return `url(${cloudsImage})`;
       case "rain":
@@ -115,4 +115,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default Weather;

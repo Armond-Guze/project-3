@@ -8,6 +8,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 
 import Nav from './components/Nav';
+import Footer from './components/Footer';
 
 
 
@@ -36,13 +37,13 @@ function App() {
     
         <Nav />
         <Outlet />
+        <Footer />
     
     </ApolloProvider>
   );
 }
 
 export default App;
-
 
 
 

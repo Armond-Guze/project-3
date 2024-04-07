@@ -35,6 +35,7 @@ module.exports = {
                 throw new AuthenticationError('Incorrect email or password');
             }
 
+            
             const token = signToken(user);
 
             return { token, user };

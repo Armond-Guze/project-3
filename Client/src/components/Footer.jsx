@@ -2,13 +2,13 @@ import React from 'react';
 
 function Footer() {
   const footerStyle = {
-    backgroundColor: '#3b82f6', // Same blue color as the navigation bar
+    backgroundColor: '#3b82f6',
     color: 'white',
     textAlign: 'center',
-    padding: '2rem', // Increased padding
+    padding: '2rem',
     position: 'relative',
     width: '100%',
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Shadow effect
+    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', 
   };
 
   const linkStyle = {
@@ -16,7 +16,7 @@ function Footer() {
     textDecoration: 'none',
     marginLeft: '1rem',
     marginRight: '1rem',
-    fontWeight: 'bold',
+    fontWeight: 'bold', 
   };
 
   return (

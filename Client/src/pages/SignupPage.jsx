@@ -1,24 +1,23 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import Auth from '../utils/auth';
 import { CREATE_USER } from '../utils/mutations';
 
-function SignupPage(props) {
-  const [formState, setFormState] = useState({ email: '', password: '', username: '' });
-  const [createUser] = useMutation(CREATE_USER);
+const SignupPage = () => {
+  const [formState, setFormState] = useState({ email: '', password: '' });
+  const [createUser, { error }] = useMutation(CREATE_USER);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    const mutationResponse = await createUser({
-      variables: {
-        email: formState.email,
-        password: formState.password,
-        username: formState.username,
-      },
-    });
-    const token = mutationResponse.data.createUser.token;
-    Auth.login(token);
+    try {
+      const { data } = await createUser({
+        variables: { ...formState },
+      });
+      console.log(data); // Optional: log the response data
+      // Redirect to another page or perform other actions upon successful signup
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleChange = (event) => {
@@ -34,16 +33,6 @@ function SignupPage(props) {
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-4 text-center">Sign Up</h2>
         <form onSubmit={handleFormSubmit}>
-          <div className="mb-4">
-            <label className="block mb-2">Username:</label>
-            <input
-              type="text"
-              name="username"
-              value={formState.username}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-            />
-          </div>
           <div className="mb-4">
             <label className="block mb-2">Email:</label>
             <input
@@ -71,12 +60,13 @@ function SignupPage(props) {
             Sign Up
           </button>
         </form>
+        {error && <p className="text-red-500 mt-4">{error.message}</p>}
         <p className="mt-4 text-center">
           Already have an account? <Link to="/login" className="text-blue-500">Login</Link>
         </p>
       </div>
     </div>
   );
-}
+};
 
 export default SignupPage;

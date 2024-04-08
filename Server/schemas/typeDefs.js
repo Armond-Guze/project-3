@@ -1,14 +1,20 @@
 const typeDefs = `#graphql
-type User {
+  type User {
     id: ID!
-    username: String!,
+    username: String!
     email: String!
-}
+  }
 
-type AuthSuccess {
+  type Destination {
+    id: ID!
+    name: String!
+    # Add any other fields you have for a destination
+  }
+
+  type AuthSuccess {
     token: String!
     user: User!
-}
+  }
  
   type Query {
     me: User!
@@ -16,16 +22,17 @@ type AuthSuccess {
 
   type Mutation {
     createUser(
-        username: String!,
-        email: String!,
-        password: String!
+      username: String!
+      email: String!
+      password: String!
     ): AuthSuccess!
 
     login(email: String!, password: String!): AuthSuccess!
-    
+
+    # Mutation for liking a destination
+    likeDestination(destinationId: ID!): Destination!
+    # You can adjust the return type and input arguments according to your application's needs
   }
 `;
 
 module.exports = typeDefs;
-
-

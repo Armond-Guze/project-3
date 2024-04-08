@@ -40,33 +40,33 @@ function LoginPage(props) {
 //     }
 //   };
 
-  return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleFormSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={formState.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={formState.password}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit">Login</button>
-     
-      </form>
-    </div>
-  );
+return (
+  <div>
+    <h2>Login</h2>
+    <form onSubmit={handleFormSubmit}>
+      <div>
+        <label>Email:</label>
+        <input
+          type="email"
+          name="email"
+          value={formState.email}
+          onChange={handleChange}
+        />
+      </div>
+      <div>
+        <label>Password:</label>
+        <input
+          type="password"
+          name="password"
+          value={formState.password}
+          onChange={handleChange}
+        />
+      </div>
+      <button type="submit">Login</button>
+      {error && <p>Error: {error.message}</p>}
+    </form>
+  </div>
+);
 }
 
 export default LoginPage;

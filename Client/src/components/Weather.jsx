@@ -51,7 +51,7 @@ const Weather = ({ setBackgroundImage }) => {
     <div
       className="min-h-screen flex justify-center items-center"
       style={{
-        backgroundImage: backgroundImage,
+        backgroundImage: setBackgroundImage,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

@@ -4,9 +4,10 @@ import clearImage from '../assets/clear.jpg';
 import cloudsImage from "../assets/cloud.jpg";
 import rainImage from "../assets/rain.jpg";
 import snowImage from "../assets/snow.jpg";
+import Destination from "./Destination";
 
-function Weather() {
-  const [location, setLocation] = useState("Dallas");
+function Weather({ searchedCity }) {
+  const [location, setLocation] = useState(searchedCity || "Dallas");
   const [weatherData, setWeatherData] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
@@ -29,8 +30,18 @@ function Weather() {
     fetchWeatherData();
   }, [location]);
 
+  useEffect(() => {
+    if (searchedCity) {
+      setLocation(searchedCity);
+    }
+  }, [searchedCity]);
+
   const handleSearch = () => {
     setLocation(searchQuery);
+  };
+
+  const handleCityClick = (cityName) => {
+    setSearchQuery(cityName);
   };
 
   const getBackgroundImage = (weatherCondition) => {
@@ -56,7 +67,6 @@ function Weather() {
                     likeDestination(destinationId: $destinationId) {
                         id
                         name
-                        // Include any other fields you want to retrieve after liking the destination
                     }
                 }
             `,
@@ -72,14 +82,18 @@ function Weather() {
 
   return (
     <div
-      className="min-h-screen flex justify-center items-center"
       style={{
         backgroundImage: backgroundImage,
         backgroundSize: "cover",
         backgroundPosition: "center",
+        minHeight: "100vh", // Ensure the background covers the entire viewport
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center", // Center vertically
+        alignItems: "center", // Center horizontally
       }}
     >
-      <div className="bg-white bg-opacity-75 p-8 rounded-lg shadow-lg">
+      <div className="bg-white bg-opacity-75 p-8 rounded-lg shadow-lg mb-4">
         <h1 className="text-4xl font-bold text-gray-800 mb-4 text-center">
           Plan Trip
         </h1>
@@ -135,9 +149,11 @@ function Weather() {
           </div>
         )}
       </div>
+      <Destination onCityClick={handleCityClick} />
     </div>
   );
 }
 
 export default Weather;
+
 

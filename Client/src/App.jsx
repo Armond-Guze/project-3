@@ -38,7 +38,6 @@ function App() {
     
         <Nav />
         <Outlet />
-        <Destination />
         <Footer />
     
     </ApolloProvider>

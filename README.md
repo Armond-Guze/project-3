@@ -7,26 +7,28 @@ Currently, two official plugins are available:
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
 - [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## project-3 (videogame-api)
+## project-3 (Plan Your Trip)
 
 ## User Story
 
 ```md
-As a user, I want to be able to view the top trending video games
-As a user, I want to be able to view all games
-As a user, I want to be able to search for games 
+As a user, I want to be able to view the top trending travel destinations
+As a user, I want to be able to view all destination's weather
+As a user, I want to be able to search a destination for its weather
+As a user, I want to be able click on a destination and be redirected to book a flight 
 As a user, I want to be able to create an account
-<!-- As a user, I want to be able to be able to click on links for each game and be redirected to it purchasing site -->
+As a user, I want to be able to favorite locations and save them to my account for later
 
 ## Acceptance Criteria
 
 Given a homepage 
-Then I am able to view the top trending video games 
-Then when I go to search for a movie then I am redirected to a login/ signup page 
-Then if I log in or create an account with valid credentials I can access the game I searched for
-Given the game I searched for I should be presented with information such as the release date, summary, rating and poster image
-Then I am given a choice to add game to my favorites list in my account
-When I click on favorites I am redirected to my account page holding all of my favorite games
+Then I am able to view the top trending travel destinations
+Then when I go to search for a destination then I am redirected to a login/ signup page 
+Then if I log in or create an account with valid credentials I can access the destination I searched for
+Given the destination I searched for I should be presented with the weather of the destination 
+Then I am given a choice to add destination to my favorites list in my account
+When I click on favorites I am redirected to my account page holding all of my favorite destinations 
+When I click on book destination then I am redirected to it's booking purchase site 
 
 ## dependancies 
 - react

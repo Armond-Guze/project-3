@@ -29,45 +29,45 @@ function LoginPage(props) {
     });
   };
 
-//   const handleLogout = async () => {
-//     try {
-//       // Call logout function from auth.js to log the user out
-//       await logout();
-//     //   Redirect to login page after successful logout
-//     //   history.push("/login");
-//     } catch (error) {
-//       console.error("Error logging out:", error);
-//     }
-//   };
-
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleFormSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={formState.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={formState.password}
-            onChange={handleChange}
-          />
-        </div>
-        <button type="submit">Login</button>
-     
-      </form>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
+        <form onSubmit={handleFormSubmit}>
+          <div className="mb-4">
+            <label className="block mb-2">Email:</label>
+            <input
+              type="email"
+              name="email"
+              value={formState.email}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block mb-2">Password:</label>
+            <input
+              type="password"
+              name="password"
+              value={formState.password}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none"
+          >
+            Login
+          </button>
+        </form>
+        {error && <p className="text-red-500 mt-4">{error.message}</p>}
+        <p className="mt-4 text-center">
+          Don't have an account? <Link to="/signup" className="text-blue-500">Sign Up</Link>
+        </p>
+      </div>
     </div>
   );
 }
 
 export default LoginPage;
-

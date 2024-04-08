@@ -1,78 +1,45 @@
-const { signToken, AuthenticationError } = require('../utils/auth');
-const { User, Destination } = require('../models')
+const { AuthenticationError } = require('@apollo/server');
+const { User } = require('../models');
+const { signToken } = require("../utils/auth.js");
 
-const resolvers = {
+module.exports = {
     Query: {
-        // Resolver function to fetch top trending travel destinations
-        topTrendingDestinations: async () => {
-            try {
-                // Fetch top trending destinations from the database
-                const destinations = await Destination.find().limit(10); // Adjust as per your requirement
-                return destinations;
-            } catch (error) {
-                console.error('Error fetching top trending destinations:', error);
-                throw new Error('Failed to fetch top trending destinations');
+        me: (parent, args, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('Must be logged in');
             }
-        },
-        // Resolver function to fetch user's favorite destinations (assuming you have user authentication)
-        me: async (parent, args, context) => {
-            if (context.user) {
-                return User.findOne({ _id: context.user._id }).populate('favoriteDestination');
-            }
-            throw AuthenticationError;
+            return User.findById(context.user.id);
         }
     },
     Mutation: {
-        addUser: async (parent, { username, email, password }) => {
-            const user = await User.create({ username, email, password });
-            const token = signToken(user);
-            return { token, user };
+        createUser: async (parent, args, context) => {
+            try {
+                const user = await User.create(args);
+                const token = signToken(user);
+                return { user, token };
+            } catch (error) {
+                console.log(error);
+                throw new AuthenticationError('Failed to create user');
+            }
         },
-        login: async (parent, { email, password }) => {
+        login: async (parent, { email, password }, context) => {
             const user = await User.findOne({ email });
 
             if (!user) {
-                throw AuthenticationError;
+                throw new AuthenticationError('Incorrect email or password');
             }
 
-            const correctPw = await user.isCorrectPassword(password);
+            const correctPassword = await user.isCorrectPassword(password);
 
-            if (!correctPw) {
-                throw AuthenticationError;
+            if (!correctPassword) {
+                throw new AuthenticationError('Incorrect email or password');
             }
 
+            
             const token = signToken(user);
 
             return { token, user };
-        },
-        // Resolver function to add a destination to user's favorites
-        addToFavorites: async (_, args, context) => {
-            if (context.user) {
-                return await User.findOneAndUpdate(
-                    { _id: context.user._id },
-                    { $addToSet: { favoriteDestination: args.id } },
-                    { new: true }
-                );
-
-
-            }
-            throw AuthenticationError;
-        },
-        // Resolver function to remove a destination from user's favorites
-        removeFromFavorites: async (_, { id }, context) => {
-            if (context.user) {
-                return await User.findOneAndUpdate(
-                    { _id: context.user._id },
-                    { $pull: { favoriteDestination: { id } } },
-                    { new: true }
-                );
-    
-    
-            }
-            throw AuthenticationError;
-    
         }
-    },
+    }
 };
 
-module.exports = resolvers;

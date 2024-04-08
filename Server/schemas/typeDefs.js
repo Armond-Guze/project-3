@@ -1,34 +1,31 @@
-const typeDefs = `
- type User {
-    _id: ID
-    username: String
-    email: String
-    favoriteDestination: [Destination]
- }
+const typeDefs = `#graphql
+type User {
+    id: ID!
+    username: String!,
+    email: String!
+}
 
-  type Destination {
-    _id: ID
-    name: String
-    location: String
-    topDestination: Boolean
-  }
-  
-  type Auth{
-    token: ID
-    user: User
-  }
-
+type AuthSuccess {
+    token: String!
+    user: User!
+}
+ 
   type Query {
-    topTrendingDestinations: [Destination]
-    me: User
+    me: User!
   }
 
   type Mutation {
-    addUser(username: String!, email: String!, password: String!): Auth
-    login(email: String!, password: String!): Auth
-    addToFavorites(id: String): User
-    removeFromFavorites(id: ID): User
+    createUser(
+        username: String!,
+        email: String!,
+        password: String!
+    ): AuthSuccess!
+
+    login(email: String!, password: String!): AuthSuccess!
+    
   }
 `;
 
 module.exports = typeDefs;
+
+

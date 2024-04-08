@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
 const FavoritePage = () => {
@@ -7,16 +6,17 @@ const FavoritePage = () => {
   const location = useLocation();
 
   useEffect(() => {
-    fetchFavoriteDestinations();
+    // Load liked destinations from localStorage when component mounts
+    const savedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    setFavoriteDestinations(savedFavorites);
   }, []);
 
-  const fetchFavoriteDestinations = async () => {
-    try {
-      const response = await axios.get('/api/favorites');
-      setFavoriteDestinations(response.data);
-    } catch (error) {
-      console.error('Error fetching favorite destinations:', error);
-    }
+  // Function to handle adding a new favorite destination
+  const addFavoriteDestination = (destination) => {
+    // Update state with new destination
+    setFavoriteDestinations([...favoriteDestinations, destination]);
+    // Save updated list to localStorage
+    localStorage.setItem('favorites', JSON.stringify([...favoriteDestinations, destination]));
   };
 
   return (
@@ -37,6 +37,10 @@ const FavoritePage = () => {
         <div className="mt-4">
           <h2 className="text-xl font-semibold mb-2">Newly Liked Destination:</h2>
           <p className="text-lg">{location.state.favoriteDestination.name}</p>
+          {/* Optionally, you can add a button to add the newly liked destination to favorites */}
+          <button onClick={() => addFavoriteDestination(location.state.favoriteDestination)}>
+            Add to Favorites
+          </button>
         </div>
       )}
     </div>

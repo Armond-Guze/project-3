@@ -30,48 +30,47 @@ function LoginPage(props) {
   };
 
   const handleLogout = () => {
-    // Clear the authentication token
     Auth.logout();
-    // Redirect to login page
-    window.location.reload(); // You may replace this with a route change if using React Router
+    window.location.reload();
   };
 
-  // Check if user is already logged in
   if (Auth.loggedIn()) {
     return (
-      <div>
-        <h2>Already Logged In</h2>
-        <p>You are already logged in.</p>
-        <button onClick={handleLogout}>Logout</button>
-        <Link to="/">Go to Homepage</Link>
+      <div className="container mx-auto mt-8">
+        <h2 className="text-3xl font-bold mb-4">Already Logged In</h2>
+        <p className="text-lg mb-4">You are already logged in.</p>
+        <button className="bg-red-500 text-white py-2 px-4 rounded" onClick={handleLogout}>Logout</button>
+        <Link className="block mt-4 text-blue-500" to="/">Go to Homepage</Link>
       </div>
     );
   }
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="container mx-auto mt-8">
+      <h2 className="text-3xl font-bold mb-4">Login</h2>
       <form onSubmit={handleFormSubmit}>
-        <div>
-          <label>Email:</label>
+        <div className="mb-4">
+          <label className="block text-gray-700 mb-2">Email:</label>
           <input
+            className="border border-gray-400 px-4 py-2 rounded w-full focus:outline-none focus:border-blue-500"
             type="email"
             name="email"
             value={formState.email}
             onChange={handleChange}
           />
         </div>
-        <div>
-          <label>Password:</label>
+        <div className="mb-4">
+          <label className="block text-gray-700 mb-2">Password:</label>
           <input
+            className="border border-gray-400 px-4 py-2 rounded w-full focus:outline-none focus:border-blue-500"
             type="password"
             name="password"
             value={formState.password}
             onChange={handleChange}
           />
         </div>
-        <button type="submit">Login</button>
-        {error && <p>Error: {error.message}</p>}
+        <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600" type="submit">Login</button>
+        {error && <p className="text-red-500 mt-2">Error: {error.message}</p>}
       </form>
     </div>
   );

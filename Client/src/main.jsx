@@ -6,10 +6,9 @@ import App from './App.jsx';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
-import FavoritePage from './pages/FavoritePage';
-import NoMatch from './pages/NoMatch'
-
-
+import FavoritePage from './pages/FavoritePage.jsx';
+import NoMatch from './pages/NoMatch';
+import AboutusPage from './pages/AboutusPage.jsx'; // Correct import here
 
 const router = createBrowserRouter([
   {
@@ -29,18 +28,17 @@ const router = createBrowserRouter([
       }, {
         path: '/favorite',
         element: <FavoritePage />
-      }, 
-      
+      }, {
+        path: '/aboutus',
+        element: <AboutusPage /> // Corrected component name here
+      }
     ]
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
-)
-
-
-
+);
 
 
 

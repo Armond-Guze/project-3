@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import clearImage from '../assets/clear.jpg'; // Imported my images
+import clearImage from '../assets/clear.jpg';
 import cloudsImage from "../assets/cloud.jpg";
 import rainImage from "../assets/rain.jpg";
 import snowImage from "../assets/snow.jpg";
@@ -18,7 +18,6 @@ function Weather() {
           `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=86a6c14c449d6231e1d0c3495c6b76ca`
         );
         setWeatherData(response.data);
-        // Fetching background image based on weather condition
         const weatherCondition = response.data.weather[0].main.toLowerCase();
         setBackgroundImage(getBackgroundImage(weatherCondition));
       } catch (error) {
@@ -37,7 +36,7 @@ function Weather() {
   const getBackgroundImage = (weatherCondition) => {
     switch (weatherCondition) {
       case "clear":
-        return `url(${clearImage})`; // Used imported image
+        return `url(${clearImage})`;
       case "clouds":
         return `url(${cloudsImage})`;
       case "rain":
@@ -45,7 +44,29 @@ function Weather() {
       case "snow":
         return `url(${snowImage})`;
       default:
-        return `url(${clearImage})`; // Default to clear image if no match
+        return `url(${clearImage})`;
+    }
+  };
+
+  const handleLike = async () => {
+    try {
+        const response = await axios.post('/graphql', {
+            query: `
+                mutation LikeDestination($destinationId: ID!) {
+                    likeDestination(destinationId: $destinationId) {
+                        id
+                        name
+                        // Include any other fields you want to retrieve after liking the destination
+                    }
+                }
+            `,
+            variables: {
+                destinationId: weatherData.id
+            }
+        });
+        console.log('Liked destination:', response.data.data.likeDestination);
+    } catch (error) {
+        console.error('Error liking destination:', error);
     }
   };
 
@@ -108,6 +129,9 @@ function Weather() {
                 </p>
               </div>
             </div>
+            <button onClick={handleLike} className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md mt-4 focus:outline-none">
+              Like
+            </button>
           </div>
         )}
       </div>

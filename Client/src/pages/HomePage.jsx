@@ -20,6 +20,7 @@ const HomePage = () => {
       </div>
 
       <Weather></Weather>
+      {/* <LikedDestinations></LikedDestinations> */}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import Auth from '../utils/auth';
@@ -29,45 +29,52 @@ function LoginPage(props) {
     });
   };
 
-//   const handleLogout = async () => {
-//     try {
-//       // Call logout function from auth.js to log the user out
-//       await logout();
-//     //   Redirect to login page after successful logout
-//     //   history.push("/login");
-//     } catch (error) {
-//       console.error("Error logging out:", error);
-//     }
-//   };
+  const handleLogout = () => {
+    // Clear the authentication token
+    Auth.logout();
+    // Redirect to login page
+    window.location.reload(); // You may replace this with a route change if using React Router
+  };
 
-return (
-  <div>
-    <h2>Login</h2>
-    <form onSubmit={handleFormSubmit}>
+  // Check if user is already logged in
+  if (Auth.loggedIn()) {
+    return (
       <div>
-        <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={formState.email}
-          onChange={handleChange}
-        />
+        <h2>Already Logged In</h2>
+        <p>You are already logged in.</p>
+        <button onClick={handleLogout}>Logout</button>
+        <Link to="/">Go to Homepage</Link>
       </div>
-      <div>
-        <label>Password:</label>
-        <input
-          type="password"
-          name="password"
-          value={formState.password}
-          onChange={handleChange}
-        />
-      </div>
-      <button type="submit">Login</button>
-      {error && <p>Error: {error.message}</p>}
-    </form>
-  </div>
-);
+    );
+  }
+
+  return (
+    <div>
+      <h2>Login</h2>
+      <form onSubmit={handleFormSubmit}>
+        <div>
+          <label>Email:</label>
+          <input
+            type="email"
+            name="email"
+            value={formState.email}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label>Password:</label>
+          <input
+            type="password"
+            name="password"
+            value={formState.password}
+            onChange={handleChange}
+          />
+        </div>
+        <button type="submit">Login</button>
+        {error && <p>Error: {error.message}</p>}
+      </form>
+    </div>
+  );
 }
 
 export default LoginPage;
-

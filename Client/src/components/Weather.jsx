@@ -49,6 +49,10 @@ function Weather() {
     }
   };
 
+  const convertToCelsius = (tempCelsius) => {
+    return (tempCelsius * 9/5) + 32;
+  };
+
   return (
     <div
       className="min-h-screen flex justify-center items-center"
@@ -83,7 +87,7 @@ function Weather() {
               {weatherData.name}
             </h2>
             <div className="text-6xl font-bold text-gray-800">
-              {Math.round(weatherData.main.temp - 273.15)}°C
+              {Math.round(convertToCelsius(weatherData.main.temp - 273.15))}°F
             </div>
             <div className="text-xl text-gray-700 mb-4">
               {weatherData.weather[0].description}
@@ -92,7 +96,7 @@ function Weather() {
               <div>
                 <p className="text-lg text-gray-700">Feels like</p>
                 <p className="text-2xl font-bold text-gray-800">
-                  {Math.round(weatherData.main.feels_like - 273.15)}°C
+                  {Math.round(convertToCelsius(weatherData.main.feels_like - 273.15))}°F
                 </p>
               </div>
               <div>

@@ -61,22 +61,24 @@ function Weather({ searchedCity }) {
 
   const handleLike = async () => {
     try {
-        const response = await axios.post('/graphql', {
-            query: `
-                mutation LikeDestination($destinationId: ID!) {
-                    likeDestination(destinationId: $destinationId) {
-                        id
-                        name
-                    }
-                }
-            `,
-            variables: {
-                destinationId: weatherData.id
+      const response = await axios.post('/graphql', {
+        query: `
+          mutation LikeDestination($destinationId: ID!) {
+            likeDestination(destinationId: $destinationId) {
+              id
+              name
             }
-        });
-        console.log('Liked destination:', response.data.data.likeDestination);
+          }
+        `,
+        variables: {
+          destinationId: weatherData.id
+        }
+      });
+      console.log('Liked destination:', response.data.data.likeDestination);
+      // Assuming you have a function to save the liked destination to trips page
+      saveToTrips(response.data.data.likeDestination);
     } catch (error) {
-        console.error('Error liking destination:', error);
+      console.error('Error liking destination:', error);
     }
   };
 

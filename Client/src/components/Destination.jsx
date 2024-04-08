@@ -11,10 +11,9 @@ const Destination = ({ onCityClick }) => {
       const destinations = response.data.data.map(cityData => ({
         name: cityData.city,
       }));
-      // Shuffle the destinations array and select the first three
+      // Shuffle the destinations array
       const shuffledDestinations = destinations.sort(() => Math.random() - 0.5);
-      const selectedDestinations = shuffledDestinations.slice(0, 3);
-      setRandomDestinations(selectedDestinations);
+      setRandomDestinations(shuffledDestinations);
     } catch (error) {
       console.error('Error fetching random destinations from weather API:', error);
     }
@@ -26,11 +25,11 @@ const Destination = ({ onCityClick }) => {
   }, []);
 
   return (
-    <div className="container mt-8 text-center">
-      <h2 className="text-3xl font-semibold mb-4">More Destinations</h2>
-      <div className="flex justify-center">
-        {randomDestinations.map((destination, index) => (
-          <div key={index} className="mx-4" onClick={() => onCityClick(destination.name)}>
+    <div className="container mt-8 text-center mb-4">
+      <h2 className="text-3xl font-semibold mb-4">Featured Destinations</h2>
+      <div className="grid grid-cols-3 gap-4">
+        {randomDestinations.slice(0, 6).map((destination, index) => (
+          <div key={index} onClick={() => onCityClick(destination.name)}>
             <div className="bg-white rounded-lg shadow-lg p-6 cursor-pointer">
               <h3 className="text-xl font-semibold mb-2">{destination.name}</h3>
               {/* Add other properties as needed */}
@@ -43,3 +42,4 @@ const Destination = ({ onCityClick }) => {
 };
 
 export default Destination;
+

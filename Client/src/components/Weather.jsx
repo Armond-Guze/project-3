@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import clearImage from '../assets/clear.jpg';
-import cloudsImage from '../assets/cloud.jpg';
-import rainImage from '../assets/rain.jpg';
-import snowImage from '../assets/snow.jpg';
+import cloudsImage from "../assets/cloud.jpg";
+import rainImage from "../assets/rain.jpg";
+import snowImage from "../assets/snow.jpg";
+import Destination from "./Destination";
 
-const Weather = ({ setBackgroundImage }) => {
-  const [location, setLocation] = useState('Dallas');
+function Weather({ searchedCity }) {
+  const [location, setLocation] = useState(searchedCity || "Dallas");
   const [weatherData, setWeatherData] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [backgroundImage, setBackgroundImage] = useState("");
 
   useEffect(() => {
     const fetchWeatherData = async () => {
@@ -20,7 +22,7 @@ const Weather = ({ setBackgroundImage }) => {
         const weatherCondition = response.data.weather[0].main.toLowerCase();
         setBackgroundImage(getBackgroundImage(weatherCondition));
       } catch (error) {
-        console.error('Error fetching weather data:', error);
+        console.error("Error fetching weather data:", error);
         setWeatherData(null);
       }
     };
@@ -28,14 +30,24 @@ const Weather = ({ setBackgroundImage }) => {
     fetchWeatherData();
   }, [location]);
 
+  useEffect(() => {
+    if (searchedCity) {
+      setLocation(searchedCity);
+    }
+  }, [searchedCity]);
+
   const handleSearch = () => {
     setLocation(searchQuery);
+  };
+
+  const handleCityClick = (cityName) => {
+    setSearchQuery(cityName);
   };
 
   const getBackgroundImage = (weatherCondition) => {
     switch (weatherCondition) {
       case "clear":
-        return `url(${clearImage})`; // Used imported image
+        return `url(${clearImage})`;
       case "clouds":
         return `url(${cloudsImage})`;
       case "rain":
@@ -43,7 +55,32 @@ const Weather = ({ setBackgroundImage }) => {
       case "snow":
         return `url(${snowImage})`;
       default:
-        return `url(${clearImage})`; // Default to clear image if no match
+        return `url(${clearImage})`;
+    }
+  };
+
+  const handleLike = async () => {
+    try {
+      if (weatherData) {
+        const response = await axios.post('/graphql', {
+          query: `#graphql
+            mutation LikeDestination($destinationId: ID!) {
+              likeDestination(destinationId: $destinationId) {
+                id
+                name
+              }
+            }
+          `,
+          variables: {
+            destinationId: weatherData.id
+          }
+        });
+        console.log('Liked destination:', response.data.data.likeDestination);
+        // Assuming you have a function to save the liked destination to favorites page
+        saveToFavorites(response.data.data.likeDestination);
+      }
+    } catch (error) {
+      console.error('Error liking destination:', error);
     }
   };
 
@@ -53,14 +90,18 @@ const Weather = ({ setBackgroundImage }) => {
 
   return (
     <div
-      className="min-h-screen flex justify-center items-center"
       style={{
-        backgroundImage: setBackgroundImage,
+        backgroundImage: backgroundImage,
         backgroundSize: "cover",
         backgroundPosition: "center",
+        minHeight: "100vh", // Ensure the background covers the entire viewport
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center", // Center vertically
+        alignItems: "center", // Center horizontally
       }}
     >
-      <div className="bg-white bg-opacity-75 p-8 rounded-lg shadow-lg">
+      <div className="bg-white bg-opacity-75 p-8 rounded-lg shadow-lg mb-4">
         <h1 className="text-4xl font-bold text-gray-800 mb-4 text-center">
           Plan Trip
         </h1>
@@ -110,11 +151,16 @@ const Weather = ({ setBackgroundImage }) => {
                 </p>
               </div>
             </div>
+            <button onClick={handleLike} className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md mt-4 focus:outline-none">
+              Like
+            </button>
           </div>
         )}
       </div>
+      <Destination onCityClick={handleCityClick} />
     </div>
   );
 }
 
 export default Weather;
+

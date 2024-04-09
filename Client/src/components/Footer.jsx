@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 
+
 function Footer() {
   const footerStyle = {
     backgroundColor: '#3b82f6',

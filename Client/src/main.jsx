@@ -6,12 +6,9 @@ import App from './App.jsx';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
-import FavoritePage from './pages/FavoritePage';
-import NoMatch from './pages/NoMatch'
-import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
-import TermsOfService from './pages/TermsOfService.jsx';
-
-
+import FavoritePage from './pages/FavoritePage.jsx';
+import NoMatch from './pages/NoMatch';
+import AboutusPage from './pages/AboutusPage.jsx'; // Correct import here
 
 const router = createBrowserRouter([
   {
@@ -22,39 +19,26 @@ const router = createBrowserRouter([
       {
         index: true, 
         element: <HomePage />
-      }, 
-      {
+      }, {
         path: '/login',
         element: <LoginPage />
-      }, 
-      {
+      }, {
         path: '/signup',
         element: <SignupPage />
-      }, 
-      {
+      }, {
         path: '/favorite',
         element: <FavoritePage />
-      },
-      {
-        path: '/privacy-policy',
-        element: <PrivacyPolicy />
-      },
-      {
-        path: '/terms-of-service',
-        element: <TermsOfService />
+      }, {
+        path: '/aboutus',
+        element: <AboutusPage /> // Corrected component name here
       }
     ]
   }
 ]);
 
-
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
-)
-
-
-
+);
 
 
 

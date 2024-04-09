@@ -21,3 +21,5 @@ const cleanDatabase = async () => {
 
 // Call the cleanDatabase function to clear the database
 cleanDatabase();
+
+// need to figure mongodb

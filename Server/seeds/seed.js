@@ -3,7 +3,7 @@ const Destination = require('../models/destination');
 const axios = require('axios');
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:5173/travelApp', {
+mongoose.connect('mongodb://localhost:27017/travelApp', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

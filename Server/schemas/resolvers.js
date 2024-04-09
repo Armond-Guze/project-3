@@ -1,66 +1,78 @@
-const { AuthenticationError } = require('@apollo/server');
-const { User, Destination } = require('../models'); // Assuming you have a Destination model
-const { signToken } = require("../utils/auth.js");
+const { signToken, AuthenticationError } = require('../utils/auth');
+const { User, Destination } = require('../models')
 
-module.exports = {
+const resolvers = {
     Query: {
-        me: (parent, args, context) => {
-            if (!context.user) {
-                throw new AuthenticationError('Must be logged in');
+        // Resolver function to fetch top trending travel destinations
+        topTrendingDestinations: async () => {
+            try {
+                // Fetch top trending destinations from the database
+                const destinations = await Destination.find().limit(10); // Adjust as per your requirement
+                return destinations;
+            } catch (error) {
+                console.error('Error fetching top trending destinations:', error);
+                throw new Error('Failed to fetch top trending destinations');
             }
-            return User.findById(context.user.id);
+        },
+        // Resolver function to fetch user's favorite destinations (assuming you have user authentication)
+        me: async (parent, args, context) => {
+            if (context.user) {
+                return User.findOne({ _id: context.user._id }).populate('favoriteDestination');
+            }
+            throw AuthenticationError;
         }
     },
     Mutation: {
-        createUser: async (parent, args, context) => {
-            try {
-                const user = await User.create(args);
-                const token = signToken(user);
-                return { user, token };
-            } catch (error) {
-                console.log(error);
-                throw new AuthenticationError('Failed to create user');
-            }
+        addUser: async (parent, { username, email, password }) => {
+            const user = await User.create({ username, email, password });
+            const token = signToken(user);
+            return { token, user };
         },
-        login: async (parent, { email, password }, context) => {
+        login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
 
             if (!user) {
-                throw new AuthenticationError('Incorrect email or password');
+                throw AuthenticationError;
             }
 
-            const correctPassword = await user.isCorrectPassword(password);
+            const correctPw = await user.isCorrectPassword(password);
 
-            if (!correctPassword) {
-                throw new AuthenticationError('Incorrect email or password');
+            if (!correctPw) {
+                throw AuthenticationError;
             }
 
             const token = signToken(user);
 
             return { token, user };
         },
-        likeDestination: async (parent, { destinationId }, context) => {
-            if (!context.user) {
-                throw new AuthenticationError('Must be logged in to like a destination');
+        // Resolver function to add a destination to user's favorites
+        addToFavorites: async (_, args, context) => {
+            if (context.user) {
+                return await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $addToSet: { favoriteDestination: args.id } },
+                    { new: true }
+                );
+
+
             }
-
-            const user = await User.findById(context.user.id);
-            if (!user) {
-                throw new AuthenticationError('User not found');
+            throw AuthenticationError;
+        },
+        // Resolver function to remove a destination from user's favorites
+        removeFromFavorites: async (_, { id }, context) => {
+            if (context.user) {
+                return await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $pull: { favoriteDestination: { id } } },
+                    { new: true }
+                );
+    
+    
             }
-
-            const destination = await Destination.findById(destinationId);
-            if (!destination) {
-                throw new Error('Destination not found');
-            }
-
-            // Add logic to like the destination (for example, add it to the user's likedDestinations array)
-            // user.likedDestinations.push(destination);
-            // await user.save();
-
-            // Return the liked destination (you can return whatever data you want here)
-            return destination;
+            throw AuthenticationError;
+    
         }
-    }
+    },
 };
 
+module.exports = resolvers;

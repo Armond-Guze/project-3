@@ -160,5 +160,3 @@ function Weather({ searchedCity }) {
 
 export default Weather;
 
-
-

@@ -24,14 +24,10 @@ function Footer() {
   return (
     <footer style={footerStyle}>
       <div>
-<<<<<<< HEAD
-        <span>Follow me on GitHub:</span>
-=======
         <span>&copy; {new Date().getFullYear()} Trip Junkie</span>
         <a href="/privacy-policy" style={linkStyle}>Privacy Policy</a>
         <a href="/terms-of-service" style={linkStyle}>Terms of Service</a>
         <a href="/contact-us" style={linkStyle}>Contact Us</a>
->>>>>>> 15e2304897fc18b33043fd685ebe0e60c92fdb57
       </div>
     </footer>
   );

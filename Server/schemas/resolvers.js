@@ -12,7 +12,7 @@ module.exports = {
         }
     },
     Mutation: {
-        createUser: async (parent, args, context) => {
+        addUser: async (parent, args, context) => {
             try {
                 const user = await User.create(args);
                 const token = signToken(user);
@@ -39,7 +39,7 @@ module.exports = {
 
             return { token, user };
         },
-        likeDestination: async (parent, { destinationId }, context) => {
+        addToFavorites: async (parent, { destinationId }, context) => {
             if (!context.user) {
                 throw new AuthenticationError('Must be logged in to like a destination');
             }

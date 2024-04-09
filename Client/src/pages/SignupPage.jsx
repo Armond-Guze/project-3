@@ -13,8 +13,7 @@ const SignupPage = () => {
       const { data } = await createUser({
         variables: { ...formState },
       });
-      console.log(data); // Optional: log the response data
-      // Redirect to another page or perform other actions upon successful signup
+      console.log(data); 
     } catch (error) {
       console.error(error);
     }

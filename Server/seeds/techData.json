@@ -1,16 +1,1 @@
-[
-    {
-      "name": "Destination 1",
-      "location": "Location 1",
-      "topDestination": true
-    },
-    {
-      "name": "Destination 2",
-      "location": "Location 2"
-    },
-    {
-      "name": "Destination 3",
-      "location": "Location 3"
-    }
-  ]
-  
+[]

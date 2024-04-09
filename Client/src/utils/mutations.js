@@ -33,3 +33,13 @@ export const CREATE_USER = gql`
     }
   }
 `;
+
+// Mutation for liking a destination
+export const LIKE_DESTINATION = gql`
+  mutation likeDestination($destinationId: ID!) {
+    likeDestination(destinationId: $destinationId) {
+      id
+      name
+    }
+  }
+`;

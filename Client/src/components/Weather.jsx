@@ -61,27 +61,18 @@ function Weather({ searchedCity }) {
 
   const handleLike = async () => {
     try {
-      if (weatherData) {
-        const response = await axios.post('/graphql', {
-          query: `#graphql
-            mutation LikeDestination($destinationId: ID!) {
-              likeDestination(destinationId: $destinationId) {
-                id
-                name
-              }
-            }
-          `,
-          variables: {
-            destinationId: weatherData.id
-          }
-        });
-        console.log('Liked destination:', response.data.data.likeDestination);
-        // Assuming you have a function to save the liked destination to favorites page
-        saveToFavorites(response.data.data.likeDestination);
-      }
+      // Save liked destination to local storage
+      const likedDestinations = JSON.parse(localStorage.getItem('likedDestinations')) || [];
+      const newLikedDestination = { id: weatherData.id, name: weatherData.name };
+      localStorage.setItem('likedDestinations', JSON.stringify([...likedDestinations, newLikedDestination]));
+      console.log('Liked destination:', newLikedDestination);
     } catch (error) {
       console.error('Error liking destination:', error);
     }
+  };
+
+  const convertToCelsius = (tempCelsius) => {
+    return (tempCelsius * 9/5) + 32;
   };
 
   return (
@@ -122,7 +113,7 @@ function Weather({ searchedCity }) {
               {weatherData.name}
             </h2>
             <div className="text-6xl font-bold text-gray-800">
-              {Math.round(weatherData.main.temp - 273.15)}°C
+              {Math.round(convertToCelsius(weatherData.main.temp - 273.15))}°F
             </div>
             <div className="text-xl text-gray-700 mb-4">
               {weatherData.weather[0].description}
@@ -131,7 +122,7 @@ function Weather({ searchedCity }) {
               <div>
                 <p className="text-lg text-gray-700">Feels like</p>
                 <p className="text-2xl font-bold text-gray-800">
-                  {Math.round(weatherData.main.feels_like - 273.15)}°C
+                  {Math.round(convertToCelsius(weatherData.main.feels_like - 273.15))}°F
                 </p>
               </div>
               <div>

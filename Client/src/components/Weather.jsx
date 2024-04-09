@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import clearImage from '../assets/clear.jpg'; // Imported my images
-import cloudsImage from "../assets/cloud.jpg";
-import rainImage from "../assets/rain.jpg";
-import snowImage from "../assets/snow.jpg";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import clearImage from '../assets/clear.jpg';
+import cloudsImage from '../assets/cloud.jpg';
+import rainImage from '../assets/rain.jpg';
+import snowImage from '../assets/snow.jpg';
 
-function Weather() {
-  const [location, setLocation] = useState("Dallas");
+const Weather = ({ setBackgroundImage }) => {
+  const [location, setLocation] = useState('Dallas');
   const [weatherData, setWeatherData] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [backgroundImage, setBackgroundImage] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchWeatherData = async () => {
@@ -18,11 +17,10 @@ function Weather() {
           `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=86a6c14c449d6231e1d0c3495c6b76ca`
         );
         setWeatherData(response.data);
-        // Fetching background image based on weather condition
         const weatherCondition = response.data.weather[0].main.toLowerCase();
         setBackgroundImage(getBackgroundImage(weatherCondition));
       } catch (error) {
-        console.error("Error fetching weather data:", error);
+        console.error('Error fetching weather data:', error);
         setWeatherData(null);
       }
     };
@@ -57,7 +55,7 @@ function Weather() {
     <div
       className="min-h-screen flex justify-center items-center"
       style={{
-        backgroundImage: backgroundImage,
+        backgroundImage: setBackgroundImage,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

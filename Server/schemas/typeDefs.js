@@ -1,37 +1,33 @@
-const typeDefs = `#graphql
-  type User {
-    id: ID!
-    username: String!
-    email: String!
-  }
+const typeDefs = `
+ type User {
+    _id: ID
+    username: String
+    email: String
+    favoriteDestination: [Destination]
+ }
 
   type Destination {
-    id: ID!
-    name: String!
-    # Add any other fields you have for a destination
+    _id: ID
+    name: String
+    location: String
+    topDestination: Boolean
+  }
+  
+  type Auth{
+    token: ID
+    user: User
   }
 
-  type AuthSuccess {
-    token: String!
-    user: User!
-  }
- 
   type Query {
-    me: User!
+    topTrendingDestinations: [Destination]
+    me: User
   }
 
   type Mutation {
-    createUser(
-      username: String!
-      email: String!
-      password: String!
-    ): AuthSuccess!
-
-    login(email: String!, password: String!): AuthSuccess!
-
-    # Mutation for liking a destination
-    likeDestination(destinationId: ID!): Destination!
-    # You can adjust the return type and input arguments according to your application's needs
+    addUser(username: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
+    addToFavorites(id: String): User
+    removeFromFavorites(id: ID): User
   }
 `;
 

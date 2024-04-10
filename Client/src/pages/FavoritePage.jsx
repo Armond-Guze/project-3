@@ -1,44 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 import { FAVORITES } from '../utils/queries';
-
+import { useLocation } from 'react-router-dom';
 
 function FavoritePage(props) {
-  const [formState, setFormState] = useState([]);
-  const [loading, { data }] = useQuery(FAVORITES);
+  const location = useLocation(); // Use useLocation hook to access location state
+  const [favoriteDestinations, setFavoriteDestinations] = useState([]);
+  const { loading, data } = useQuery(FAVORITES);
 
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const queryResponse = await login({
-        variables: { email: formState.email, password: formState.password },
-      });
-      const token = queryResponse.data.login.token;
-      Auth.login(token);
-    } catch (error) {
-      console.log(error);
+  useEffect(() => {
+    if (!loading && data) {
+      setFavoriteDestinations(data.favorites); // Set favorite destinations from query data
     }
+  }, [loading, data]);
+
+  const addFavoriteDestination = (favoriteDestination) => {
+    // Logic to add favorite destination to state or perform mutation
+    console.log('Adding to favorites:', favoriteDestination);
   };
-
-
-
-// const FavoritePage = () => {
-//   const [favoriteDestinations, setFavoriteDestinations] = useState([]);
-//   const location = useLocation();
-
-//   useEffect(() => {
-//     // Load liked destinations from localStorage when component mounts
-//     const savedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
-//     setFavoriteDestinations(savedFavorites);
-//   }, []);
-
-//   // Function to handle adding a new favorite destination
-//   const addFavoriteDestination = (destination) => {
-//     // Update state with new destination
-//     setFavoriteDestinations([...favoriteDestinations, destination]);
-//     // Save updated list to localStorage
-//     localStorage.setItem('favorites', JSON.stringify([...favoriteDestinations, destination]));
-//   };
 
   return (
     <div className="container mx-auto mt-8">
@@ -46,7 +25,7 @@ function FavoritePage(props) {
       {favoriteDestinations.length > 0 ? (
         <ul>
           {favoriteDestinations.map(destination => (
-            <li key={destination.id} className="text-lg mb-2">
+            <li key={destination._id} className="text-lg mb-2"> {/* Change id to _id */}
               {destination.name}
             </li>
           ))}
@@ -69,3 +48,31 @@ function FavoritePage(props) {
 };
 
 export default FavoritePage;
+
+
+
+
+
+
+
+
+
+
+
+// const FavoritePage = () => {
+//   const [favoriteDestinations, setFavoriteDestinations] = useState([]);
+//   const location = useLocation();
+
+//   useEffect(() => {
+//     // Load liked destinations from localStorage when component mounts
+//     const savedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+//     setFavoriteDestinations(savedFavorites);
+//   }, []);
+
+//   // Function to handle adding a new favorite destination
+//   const addFavoriteDestination = (destination) => {
+//     // Update state with new destination
+//     setFavoriteDestinations([...favoriteDestinations, destination]);
+//     // Save updated list to localStorage
+//     localStorage.setItem('favorites', JSON.stringify([...favoriteDestinations, destination]));
+//   };

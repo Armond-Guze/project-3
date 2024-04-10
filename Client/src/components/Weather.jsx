@@ -5,7 +5,7 @@ import cloudsImage from "../assets/cloud.jpg";
 import rainImage from "../assets/rain.jpg";
 import snowImage from "../assets/snow.jpg";
 import Destination from "./Destination";
-import auth from '../utils/auth'
+import auth from '../utils/auth';
 
 function Weather({ searchedCity }) {
   const [location, setLocation] = useState(searchedCity || "Dallas");
@@ -32,10 +32,14 @@ function Weather({ searchedCity }) {
   }, [location]);
 
   useEffect(() => {
-    if (searchedCity) {
-      setLocation(searchedCity);
+    // Check if there's liked destination data stored in local storage
+    const likedDestinationData = localStorage.getItem('likedDestination');
+    if (likedDestinationData && weatherData) {
+      // Parse the liked destination data from local storage
+      const { id, name } = JSON.parse(likedDestinationData);
+      console.log('Liked destination stored to local storage:', { id, name });
     }
-  }, [searchedCity]);
+  }, [weatherData]); // Run this effect whenever weather data changes
 
   const handleSearch = () => {
     setLocation(searchQuery);
@@ -60,20 +64,35 @@ function Weather({ searchedCity }) {
     }
   };
 
-  const handleLike = async () => {
-    try {
-      // Save liked destination to local storage
-      const likedDestinations = JSON.parse(localStorage.getItem('likedDestinations')) || [];
-      const newLikedDestination = { id: weatherData.id, name: weatherData.name };
-      localStorage.setItem('likedDestinations', JSON.stringify([...likedDestinations, newLikedDestination]));
-      console.log('Liked destination:', newLikedDestination);
-    } catch (error) {
-      console.error('Error liking destination:', error);
-    }
-  };
-
   const convertToCelsius = (tempCelsius) => {
     return (tempCelsius * 9/5) + 32;
+  };
+
+  const handleLike = () => {
+    try {
+      if (weatherData) {
+        // Retrieve existing favorites from local storage
+        const existingFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        const isExisting = existingFavorites.some(favorite => favorite.id === weatherData.id);
+  
+        if (isExisting) {
+          const addToFavorites = window.confirm('Trip already added. Would you like to add again?');
+          if (!addToFavorites) {
+            return; // User chose not to add the trip again
+          }
+        }
+  
+        // Add the current weather data to favorites
+        existingFavorites.push({ id: weatherData.id, name: weatherData.name });
+        // Store the updated favorites back to local storage
+        localStorage.setItem('favorites', JSON.stringify(existingFavorites));
+        console.log('Liked destination data stored in local storage');
+      } else {
+        console.error('No weather data to like.');
+      }
+    } catch (error) {
+      console.error('Error storing liked destination data in local storage:', error);
+    }
   };
 
   return (
@@ -82,11 +101,11 @@ function Weather({ searchedCity }) {
         backgroundImage: backgroundImage,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        minHeight: "100vh", // Ensure the background covers the entire viewport
+        minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center", // Center vertically
-        alignItems: "center", // Center horizontally
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <div className="bg-white bg-opacity-75 p-8 rounded-lg shadow-lg mb-4">
@@ -139,10 +158,11 @@ function Weather({ searchedCity }) {
                 </p>
               </div>
             </div>
-            {auth.loggedIn() ? <button onClick={handleLike} className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md mt-4 focus:outline-none">
-              Like
-            </button> : ''}
-            
+            {auth.loggedIn() ? (
+              <button onClick={handleLike} className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md mt-4 focus:outline-none">
+                Like
+              </button>
+            ) : ''}
           </div>
         )}
       </div>
@@ -152,4 +172,3 @@ function Weather({ searchedCity }) {
 }
 
 export default Weather;
-

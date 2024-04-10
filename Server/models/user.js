@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
-
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-
 
 const userSchema = new Schema({
   username: {
@@ -20,10 +18,17 @@ const userSchema = new Schema({
     required: true,
     minlength: 5
   },
-  favoriteDestination: [
+  favoriteDestinations: [
     {
+      destinationId: { // Change this to destinationId
         type: Schema.Types.ObjectId,
         ref: 'Destination',
+        required: true
+      },
+      name: {
+        type: String,
+        required: true
+      }
     }
   ]
 });

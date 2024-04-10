@@ -26,8 +26,8 @@ const typeDefs = `
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addToFavorites(id: ID): User
-    removeFromFavorites(id: ID): User
+    addToFavorites(destinationId: ID!): User
+    removeFromFavorites(destinationId: ID!): User
   }
 `;
 

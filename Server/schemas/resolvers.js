@@ -1,17 +1,8 @@
 const { AuthenticationError } = require('@apollo/server');
-const { User, Destination } = require('../models'); // Assuming you have a Destination model
+const { User, Destination } = require('../models');
 const { signToken } = require("../utils/auth.js");
 
 module.exports = {
-    Query: {
-        me: async (parent, args, context) => {
-            if (context.user) {
-                const userData = User.findOne({_id: context.user._id}).populate('favoriteDestination');
-                return userData
-            }
-            throw new AuthenticationError('Must be logged in');
-        }
-    },
     Mutation: {
         addUser: async (parent, args, context) => {
             try {
@@ -42,25 +33,35 @@ module.exports = {
         },
         addToFavorites: async (parent, { destinationId }, context) => {
             if (!context.user) {
-                throw new AuthenticationError('Must be logged in to like a destination');
+              throw new AuthenticationError('Must be logged in to like a destination');
             }
-
-            const user = await User.findById(context.user.id);
-            if (!user) {
+            
+            try {
+              // Find the user
+              const user = await User.findById(context.user.id);
+              if (!user) {
                 throw new AuthenticationError('User not found');
+              }
+              
+              // Check if the destinationId already exists in user's favorites
+              if (user.favoriteDestination.includes(destinationId)) {
+                throw new Error('Destination already liked');
+              }
+              
+              // Add the destinationId to the user's favorite destinations
+              user.favoriteDestination.push(destinationId);
+              
+              // Save the user document
+              await user.save();
+          
+              // Return the updated user
+              return user;
+            } catch (error) {
+              console.error('Error adding to favorites:', error);
+              throw new Error('Failed to add destination to favorites');
             }
-
-            const destination = await Destination.findById(destinationId);
-            if (!destination) {
-                throw new Error('Destination not found');
-            }
-
-            // Add logic to like the destination (for example, add it to the user's likedDestinations array)
-            // user.likedDestinations.push(destination);
-            // await user.save();
-
-            // Return the liked destination (you can return whatever data you want here)
-            return destination;
-        }
+          }
+          
+        
     }
 };

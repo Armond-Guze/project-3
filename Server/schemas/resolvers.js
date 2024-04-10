@@ -4,15 +4,16 @@ const { signToken } = require("../utils/auth.js");
 
 module.exports = {
     Query: {
-        me: (parent, args, context) => {
-            if (!context.user) {
-                throw new AuthenticationError('Must be logged in');
+        me: async (parent, args, context) => {
+            if (context.user) {
+                const userData = User.findOne({_id: context.user._id}).populate('favoriteDestination');
+                return userData
             }
-            return User.findById(context.user.id);
+            throw new AuthenticationError('Must be logged in');
         }
     },
     Mutation: {
-        createUser: async (parent, args, context) => {
+        addUser: async (parent, args, context) => {
             try {
                 const user = await User.create(args);
                 const token = signToken(user);
@@ -39,7 +40,7 @@ module.exports = {
 
             return { token, user };
         },
-        likeDestination: async (parent, { destinationId }, context) => {
+        addToFavorites: async (parent, { destinationId }, context) => {
             if (!context.user) {
                 throw new AuthenticationError('Must be logged in to like a destination');
             }

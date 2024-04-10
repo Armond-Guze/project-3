@@ -5,6 +5,7 @@ import cloudsImage from "../assets/cloud.jpg";
 import rainImage from "../assets/rain.jpg";
 import snowImage from "../assets/snow.jpg";
 import Destination from "./Destination";
+import auth from '../utils/auth'
 
 function Weather({ searchedCity }) {
   const [location, setLocation] = useState(searchedCity || "Dallas");
@@ -138,9 +139,10 @@ function Weather({ searchedCity }) {
                 </p>
               </div>
             </div>
-            <button onClick={handleLike} className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md mt-4 focus:outline-none">
+            {auth.loggedIn() ? <button onClick={handleLike} className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md mt-4 focus:outline-none">
               Like
-            </button>
+            </button> : ''}
+            
           </div>
         )}
       </div>

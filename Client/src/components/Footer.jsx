@@ -1,14 +1,18 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 
-
 function Footer() {
+  const location = useLocation();
+  const isHomePage = location.pathname !== '/';
+
   const footerStyle = {
     backgroundColor: '#3b82f6',
     color: 'white',
     textAlign: 'center',
     padding: '2rem',
-    position: 'relative',
+    position: isHomePage ? 'fixed' : 'relative',
+    bottom: 0,
+    left: 0,
     width: '100%',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', 
   };

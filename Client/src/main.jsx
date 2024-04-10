@@ -11,6 +11,7 @@ import NoMatch from './pages/NoMatch';
 import AboutusPage from './pages/AboutusPage.jsx'; // Correct import here
 import PrivacyPage from './pages/PrivacyPolicy.jsx'
 import TermsOfService from './pages/TermsOfService.jsx';
+import ContactPage from './pages/ContactPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,9 @@ const router = createBrowserRouter([
       }, {
         path: '/terms-of-service',
         element: <TermsOfService />
+      }, {
+        path: '/contact-us',
+        element: <ContactPage />
       }
     ]
   }

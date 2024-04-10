@@ -6,7 +6,7 @@ mutation login($email: String!, $password: String!) {
   login(email: $email, password: $password) {
     token
     user {
-      _id
+      id
       email
       username
     }
@@ -30,7 +30,6 @@ export const CREATE_USER = gql`
       user {
         email
         id
-        username
       }
     }
   }
@@ -41,11 +40,11 @@ export const CREATE_USER = gql`
 export const LIKE_DESTINATION = gql`
   mutation likeDestination($id: ID!) {
     addToFavorites(destinationId: $id) {
-      _id
+      id
       username
       email
       favoriteDestination {
-        _id
+        id
         name
         location
       }

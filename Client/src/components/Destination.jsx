@@ -26,7 +26,7 @@ const Destination = ({ onCityClick }) => {
 
   return (
     <div className="container mt-8 text-center mb-4">
-      <h2 className="text-3xl font-semibold mb-4 bg-gray-200 rounded-lg shadow-lg p-4">Featured Destinations</h2>
+      <h2 className="text-3xl font-semibold mb-4 bg-gray-300 rounded-lg shadow-lg p-4">Featured Destinations</h2>
       <div className="grid grid-cols-3 gap-4">
         {randomDestinations.slice(0, 6).map((destination, index) => (
           <div key={index} onClick={() => onCityClick(destination.name)}>

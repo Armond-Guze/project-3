@@ -3,8 +3,16 @@ const { User, Destination } = require('../models');
 const { signToken } = require("../utils/auth.js");
 
 module.exports = {
+    Query: {
+        me: (parent, args, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('Must be logged in');
+            }
+            return User.findById(context.user.id);
+        }
+    },
     Mutation: {
-        addUser: async (parent, args, context) => {
+        createUser: async (parent, args, context) => {
             try {
                 const user = await User.create(args);
                 const token = signToken(user);
@@ -31,37 +39,37 @@ module.exports = {
 
             return { token, user };
         },
-        addToFavorites: async (parent, { destinationId }, context) => {
+        likeDestination: async (parent, { destinationId }, context) => {
             if (!context.user) {
-              throw new AuthenticationError('Must be logged in to like a destination');
+                throw new AuthenticationError('Must be logged in to like a destination');
             }
-            
+
             try {
-              // Find the user
-              const user = await User.findById(context.user.id);
-              if (!user) {
-                throw new AuthenticationError('User not found');
-              }
-              
-              // Check if the destinationId already exists in user's favorites
-              if (user.favoriteDestination.includes(destinationId)) {
-                throw new Error('Destination already liked');
-              }
-              
-              // Add the destinationId to the user's favorite destinations
-              user.favoriteDestination.push(destinationId);
-              
-              // Save the user document
-              await user.save();
-          
-              // Return the updated user
-              return user;
+                const user = await User.findById(context.user.id);
+                if (!user) {
+                    throw new AuthenticationError('User not found');
+                }
+
+                const destination = await Destination.findById(destinationId);
+                if (!destination) {
+                    throw new Error('Destination not found');
+                }
+
+                // Check if the user has already liked the destination
+                if (user.likedDestinations.includes(destinationId)) {
+                    throw new Error('Destination already liked');
+                }
+
+                // Add the destination to the user's likedDestinations array
+                user.likedDestinations.push(destinationId);
+                await user.save();
+
+                // Return the liked destination along with any other data you want
+                return destination;
             } catch (error) {
-              console.error('Error adding to favorites:', error);
-              throw new Error('Failed to add destination to favorites');
+                console.error('Error liking destination:', error);
+                throw new Error('Failed to like destination');
             }
-          }
-          
-        
+        }
     }
 };

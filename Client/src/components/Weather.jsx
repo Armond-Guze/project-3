@@ -12,6 +12,7 @@ function Weather({ searchedCity }) {
   const [weatherData, setWeatherData] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [backgroundImage, setBackgroundImage] = useState("");
+  const [destinations, setDestinations] = useState([]);
 
   useEffect(() => {
     const fetchWeatherData = async () => {
@@ -32,14 +33,15 @@ function Weather({ searchedCity }) {
   }, [location]);
 
   useEffect(() => {
-    // Check if there's liked destination data stored in local storage
-    const likedDestinationData = localStorage.getItem('likedDestination');
-    if (likedDestinationData && weatherData) {
-      // Parse the liked destination data from local storage
-      const { id, name } = JSON.parse(likedDestinationData);
-      console.log('Liked destination stored to local storage:', { id, name });
+    // Load destinations based on weather data
+    if (weatherData) {
+      setDestinations([
+        { name: "Destination 1" },
+        { name: "Destination 2" },
+        { name: "Destination 3" }
+      ]); // Replace with your actual logic to fetch destinations
     }
-  }, [weatherData]); // Run this effect whenever weather data changes
+  }, [weatherData]);
 
   const handleSearch = () => {
     setLocation(searchQuery);
@@ -108,6 +110,10 @@ function Weather({ searchedCity }) {
         alignItems: "center",
       }}
     >
+      <div
+        className="bg-transparent w-full h-1 mb-4"
+        style={{ border: "1px solid transparent" }}
+      ></div>
       <div className="bg-white bg-opacity-75 p-8 rounded-lg shadow-lg mb-4">
         <h1 className="text-4xl font-bold text-gray-800 mb-4 text-center">
           Plan Trip
@@ -166,9 +172,11 @@ function Weather({ searchedCity }) {
           </div>
         )}
       </div>
-      <Destination onCityClick={handleCityClick} />
+      <Destination destinations={destinations} onCityClick={handleCityClick} />
     </div>
   );
 }
 
 export default Weather;
+
+

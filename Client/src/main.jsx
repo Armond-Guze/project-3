@@ -1,5 +1,5 @@
-import ReactDOM from 'react-dom/client'
-import './index.css'
+import ReactDOM from 'react-dom/client';
+import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App.jsx';
@@ -9,9 +9,10 @@ import SignupPage from './pages/SignupPage';
 import FavoritePage from './pages/FavoritePage.jsx';
 import NoMatch from './pages/NoMatch';
 import AboutusPage from './pages/AboutusPage.jsx'; // Correct import here
-import PrivacyPage from './pages/PrivacyPolicy.jsx'
+import PrivacyPage from './pages/PrivacyPolicy.jsx';
 import TermsOfService from './pages/TermsOfService.jsx';
 import ContactPage from './pages/ContactPage.jsx';
+import MerchPage from './pages/Merch.jsx'; // Import the MerchPage component
 
 const router = createBrowserRouter([
   {
@@ -33,7 +34,7 @@ const router = createBrowserRouter([
         element: <FavoritePage />
       }, {
         path: '/aboutus',
-        element: <AboutusPage /> // Corrected component name here
+        element: <AboutusPage />
       }, {
         path: '/privacy-policy',
         element: <PrivacyPage />
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       }, {
         path: '/contact-us',
         element: <ContactPage />
+      },
+      {
+        path: '/merch', // Add the new route for the merch page
+        element: <MerchPage />
       }
     ]
   }
@@ -51,8 +56,6 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
 );
-
-
 
 
 

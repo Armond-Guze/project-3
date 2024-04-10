@@ -20,48 +20,65 @@ const Nav = () => {
             Trip Junkie
           </Link>
         </div>
-        <div className="hidden md:flex items-center flex-1 justify-center"> {/* Added flex-1 and justify-center */}
-          <Link to="/" className="text-white text-lg mx-4 font-bold hover:text-gray-200"> {/* Adjusted margin and added font-bold */}
+        <div className="hidden md:flex items-center flex-1 justify-center">
+          <Link to="/" className="text-white text-lg mx-4 font-bold hover:text-gray-200">
             Home
           </Link>
-          <Link to="/aboutus" className="text-white text-lg mx-4 font-bold hover:text-gray-200"> {/* Adjusted margin and added font-bold */}
+          <Link to="/aboutus" className="text-white text-lg mx-4 font-bold hover:text-gray-200">
             About Us
           </Link>
-          <Link to="/favorite" className="text-white text-lg mx-4 font-bold hover:text-gray-200"> {/* Adjusted margin and added font-bold */}
+          <Link to="/favorite" className="text-white text-lg mx-4 font-bold hover:text-gray-200">
             Trips
           </Link>
-          <Link to="/contact-us" className="text-white text-lg mx-4 font-bold hover:text-gray-200"> {/* Adjusted margin and added font-bold */}
+          <Link to="/contact-us" className="text-white text-lg mx-4 font-bold hover:text-gray-200">
             Contact
+          </Link>
+          {/* New Merch Link */}
+          <Link to="/merch" className="text-white text-lg mx-4 font-bold hover:text-gray-200">
+            Merch
           </Link>
         </div>
         <div className="hidden md:flex items-center">
-          {
-            auth.loggedIn() ? (
-              <Link onClick={() => auth.logout()} className="text-white text-lg mx-4 font-bold hover:text-gray-200"> {/* Adjusted margin and added font-bold */}
-                Logout
+          {auth.loggedIn() ? (
+            <Link onClick={() => auth.logout()} className="text-white text-lg mx-4 font-bold hover:text-gray-200">
+              Logout
+            </Link>
+          ) : (
+            <>
+              <Link to="/login" className="text-white text-lg mx-4 font-bold hover:text-gray-200">
+                Login
               </Link>
-            ) : (
-              <>
-                <Link to="/login" className="text-white text-lg mx-4 font-bold hover:text-gray-200"> {/* Adjusted margin and added font-bold */}
-                  Login
-                </Link>
-                <Link to="/signup" className="text-white text-lg mx-4 font-bold hover:text-gray-200"> {/* Adjusted margin and added font-bold */}
-                  Signup
-                </Link>
-              </>
-            )
-          }
+              <Link to="/signup" className="text-white text-lg mx-4 font-bold hover:text-gray-200">
+                Signup
+              </Link>
+            </>
+          )}
         </div>
         <div className="md:hidden">
           <FontAwesomeIcon icon={faBars} className="text-white text-2xl cursor-pointer" onClick={toggleMenu} />
           {showMenu && (
             <div className="absolute top-16 right-0 bg-blue-500 text-white rounded-lg shadow-md p-2">
-              <Link to="/" className="block py-1 hover:text-gray-200 font-bold">Home</Link> {/* Added font-bold */}
-              <Link to="/aboutus" className="block py-1 hover:text-gray-200 font-bold">About Us</Link> {/* Added font-bold */}
-              <Link to="/services" className="block py-1 hover:text-gray-200 font-bold">Services</Link> {/* Added font-bold */}
-              <Link to="/contact" className="block py-1 hover:text-gray-200 font-bold">Contact</Link> {/* Added font-bold */}
-              <Link to="/login" className="block py-1 hover:text-gray-200 font-bold">Login</Link> {/* Added font-bold */}
-              <Link to="/signup" className="block py-1 hover:text-gray-200 font-bold">Signup</Link> {/* Added font-bold */}
+              <Link to="/" className="block py-1 hover:text-gray-200 font-bold">
+                Home
+              </Link>
+              <Link to="/aboutus" className="block py-1 hover:text-gray-200 font-bold">
+                About Us
+              </Link>
+              <Link to="/services" className="block py-1 hover:text-gray-200 font-bold">
+                Services
+              </Link>
+              <Link to="/contact" className="block py-1 hover:text-gray-200 font-bold">
+                Contact
+              </Link>
+              <Link to="/merch" className="block py-1 hover:text-gray-200 font-bold">
+                Merch
+              </Link>
+              <Link to="/login" className="block py-1 hover:text-gray-200 font-bold">
+                Login
+              </Link>
+              <Link to="/signup" className="block py-1 hover:text-gray-200 font-bold">
+                Signup
+              </Link>
             </div>
           )}
         </div>
@@ -71,3 +88,4 @@ const Nav = () => {
 };
 
 export default Nav;
+

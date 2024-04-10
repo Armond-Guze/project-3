@@ -10,6 +10,7 @@ const Destination = ({ onCityClick }) => {
       const response = await axios.get('https://countriesnow.space/api/v0.1/countries/population/cities');
       const destinations = response.data.data.map(cityData => ({
         name: cityData.city,
+        country: cityData.country // Extract country information
       }));
       // Shuffle the destinations array
       const shuffledDestinations = destinations.sort(() => Math.random() - 0.5);
@@ -32,6 +33,7 @@ const Destination = ({ onCityClick }) => {
           <div key={index} onClick={() => onCityClick(destination.name)}>
             <div className="bg-gray-200 rounded-lg shadow-lg p-6 cursor-pointer transition duration-500 transform hover:bg-blue-200 hover:text-black">
               <h3 className="text-xl font-semibold mb-2">{destination.name}</h3>
+              <p>{destination.country}</p> {/* Display country */}
             </div>
           </div>
         ))}

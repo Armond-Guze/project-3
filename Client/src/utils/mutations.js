@@ -2,14 +2,16 @@ import { gql } from '@apollo/client';
 
 // Mutation for user login
 export const LOGIN = gql`
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      token
-      user {
-        id
-      }
+mutation login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    token
+    user {
+      _id
+      email
+      username
     }
   }
+}
 `;
 
 // Mutation for creating a new user
@@ -30,6 +32,16 @@ export const CREATE_USER = gql`
         id
         username
       }
+    }
+  }
+`;
+
+// Mutation for liking a destination
+export const LIKE_DESTINATION = gql`
+  mutation likeDestination($destinationId: ID!) {
+    likeDestination(destinationId: $destinationId) {
+      id
+      name
     }
   }
 `;

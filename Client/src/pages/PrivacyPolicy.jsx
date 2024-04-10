@@ -2,8 +2,8 @@ import React from "react";
 
 function PrivacyPolicy() {
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="max-w-4xl p-6 bg-white rounded-lg shadow-md border border-gray-300">
+    <div className="flex items-center justify-center mt-60">
+      <div className="max-w-4xl p-6 bg-white rounded-lg shadow-md border border-gray-400">
         <h1 className="text-2xl font-bold mb-4">Privacy Policy</h1>
         <p className="text-lg">
           At Trip Junkie, we value your privacy and are committed to protecting

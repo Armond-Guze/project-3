@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
+import Auth from '../utils/auth';
 import { CREATE_USER } from '../utils/mutations';
 
-const SignupPage = () => {
+function SignupPage(props) {
   const [formState, setFormState] = useState({ email: '', password: '' });
-  const [createUser, { error }] = useMutation(CREATE_USER);
+  const [createUser] = useMutation(CREATE_USER);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    try {
-      const { data } = await createUser({
-        variables: { ...formState },
-      });
-      console.log(data); 
-    } catch (error) {
-      console.error(error);
-    }
+    const mutationResponse = await createUser({
+      variables: {
+        email: formState.email,
+        password: formState.password,
+      },
+    });
+    const token = mutationResponse.data.createUser.token;
+    Auth.login(token);
   };
 
   const handleChange = (event) => {
@@ -28,44 +29,36 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-4 text-center">Sign Up</h2>
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="w-full max-w-md bg-white shadow-md rounded px-8 py-6 mt-[-4rem]"> {/* Adjusted margin-top */}
+        <h2 className="text-3xl font-bold mb-4 text-center">Sign Up</h2>
         <form onSubmit={handleFormSubmit}>
           <div className="mb-4">
-            <label className="block mb-2">Email:</label>
+            <label className="block text-gray-700 mb-2">Email:</label>
             <input
+              className="border border-gray-400 px-4 py-2 rounded w-full focus:outline-none focus:border-blue-500"
               type="email"
               name="email"
               value={formState.email}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-2">Password:</label>
+            <label className="block text-gray-700 mb-2">Password:</label>
             <input
+              className="border border-gray-400 px-4 py-2 rounded w-full focus:outline-none focus:border-blue-500"
               type="password"
               name="password"
               value={formState.password}
               onChange={handleChange}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
             />
           </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none"
-          >
-            Sign Up
-          </button>
+          <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded w-full" type="submit">Sign Up</button>
         </form>
-        {error && <p className="text-red-500 mt-4">{error.message}</p>}
-        <p className="mt-4 text-center">
-          Already have an account? <Link to="/login" className="text-blue-500">Login</Link>
-        </p>
+        <p className="text-sm mt-4 text-center">Already have an account? <Link to="/login" className="text-blue-500">Login</Link></p>
       </div>
     </div>
   );
-};
+}
 
 export default SignupPage;

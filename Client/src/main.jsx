@@ -6,12 +6,12 @@ import App from './App.jsx';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
-import FavoritePage from './pages/FavoritePage';
-import NoMatch from './pages/NoMatch'
-import PrivacyPolicy from './pages/PrivacyPolicy.jsx';
+import FavoritePage from './pages/FavoritePage.jsx';
+import NoMatch from './pages/NoMatch';
+import AboutusPage from './pages/AboutusPage.jsx'; // Correct import here
+import PrivacyPage from './pages/PrivacyPolicy.jsx'
 import TermsOfService from './pages/TermsOfService.jsx';
-
-
+import ContactPage from './pages/ContactPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -22,39 +22,35 @@ const router = createBrowserRouter([
       {
         index: true, 
         element: <HomePage />
-      }, 
-      {
+      }, {
         path: '/login',
         element: <LoginPage />
-      }, 
-      {
+      }, {
         path: '/signup',
         element: <SignupPage />
-      }, 
-      {
+      }, {
         path: '/favorite',
         element: <FavoritePage />
-      },
-      {
+      }, {
+        path: '/aboutus',
+        element: <AboutusPage /> // Corrected component name here
+      }, {
         path: '/privacy-policy',
-        element: <PrivacyPolicy />
-      },
-      {
+        element: <PrivacyPage />
+      }, {
         path: '/terms-of-service',
         element: <TermsOfService />
+      }, {
+        path: '/contact-us',
+        element: <ContactPage />
       }
     ]
   }
 ]);
 
-
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
-)
-
-
-
+);
 
 
 

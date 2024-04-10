@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlane, faBars } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlane, faBars } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+import auth from "../utils/auth";
 
 const Nav = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -11,36 +12,59 @@ const Nav = () => {
   };
 
   return (
-    <nav className="bg-blue-500 p-4" style={{ boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)' }}>
+    <nav className="bg-blue-500 p-4" style={{ boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)" }}>
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="flex items-center">
-          <FontAwesomeIcon icon={faPlane} className="text-white text-4xl mr-2" />
-          <div className="text-white font-bold text-2xl">Trip Junkie</div>
-        </Link>
-        <div className="md:hidden">
-          <FontAwesomeIcon icon={faBars} className="text-white text-2xl cursor-pointer" onClick={toggleMenu} />
-        </div>
-        <div className="hidden md:flex items-center justify-center flex-1">
-          <Link to="/" className="text-white text-xl font-bold mr-6 hover:text-gray-200">Home</Link>
-          <Link to="/favorites" className="text-white text-xl font-bold mr-6 hover:text-gray-200">Favorites</Link>
-          <Link to="/login" className="text-white text-xl font-bold mr-6 hover:text-gray-200">Login</Link>
-        </div>
-        <div className="hidden md:flex items-center justify-end">
-          <Link
-            to="/signup"
-            className="bg-green-500 hover:bg-green-600 transition duration-300 ease-in-out text-white text-xl font-bold py-2 px-4 rounded-md"
-          >
-            Get Started
+        <div className="flex items-center">
+          <Link to="/" className="flex items-center text-white font-bold text-2xl">
+            <FontAwesomeIcon icon={faPlane} className="text-white text-4xl mr-2" />
+            Trip Junkie
           </Link>
         </div>
-        {showMenu && (
-          <div className="md:hidden absolute top-16 right-0 bg-blue-500 text-white rounded-lg shadow-md p-2">
-            <Link to="/" className="block py-1 font-bold hover:text-gray-200">Home</Link>
-            <Link to="/favorites" className="block py-1 font-bold hover:text-gray-200">Favorites</Link>
-            <Link to="/login" className="block py-1 font-bold hover:text-gray-200">Login</Link>
-            <Link to="/signup" className="block py-1 font-bold hover:text-gray-200">Signup</Link>
-          </div>
-        )}
+        <div className="hidden md:flex items-center flex-1 justify-center"> {/* Added flex-1 and justify-center */}
+          <Link to="/" className="text-white text-lg mx-4 font-bold hover:text-gray-200"> {/* Adjusted margin and added font-bold */}
+            Home
+          </Link>
+          <Link to="/aboutus" className="text-white text-lg mx-4 font-bold hover:text-gray-200"> {/* Adjusted margin and added font-bold */}
+            About Us
+          </Link>
+          <Link to="/favorite" className="text-white text-lg mx-4 font-bold hover:text-gray-200"> {/* Adjusted margin and added font-bold */}
+            Trips
+          </Link>
+          <Link to="/contact-us" className="text-white text-lg mx-4 font-bold hover:text-gray-200"> {/* Adjusted margin and added font-bold */}
+            Contact
+          </Link>
+        </div>
+        <div className="hidden md:flex items-center">
+          {
+            auth.loggedIn() ? (
+              <Link onClick={() => auth.logout()} className="text-white text-lg mx-4 font-bold hover:text-gray-200"> {/* Adjusted margin and added font-bold */}
+                Logout
+              </Link>
+            ) : (
+              <>
+                <Link to="/login" className="text-white text-lg mx-4 font-bold hover:text-gray-200"> {/* Adjusted margin and added font-bold */}
+                  Login
+                </Link>
+                <Link to="/signup" className="text-white text-lg mx-4 font-bold hover:text-gray-200"> {/* Adjusted margin and added font-bold */}
+                  Signup
+                </Link>
+              </>
+            )
+          }
+        </div>
+        <div className="md:hidden">
+          <FontAwesomeIcon icon={faBars} className="text-white text-2xl cursor-pointer" onClick={toggleMenu} />
+          {showMenu && (
+            <div className="absolute top-16 right-0 bg-blue-500 text-white rounded-lg shadow-md p-2">
+              <Link to="/" className="block py-1 hover:text-gray-200 font-bold">Home</Link> {/* Added font-bold */}
+              <Link to="/aboutus" className="block py-1 hover:text-gray-200 font-bold">About Us</Link> {/* Added font-bold */}
+              <Link to="/services" className="block py-1 hover:text-gray-200 font-bold">Services</Link> {/* Added font-bold */}
+              <Link to="/contact" className="block py-1 hover:text-gray-200 font-bold">Contact</Link> {/* Added font-bold */}
+              <Link to="/login" className="block py-1 hover:text-gray-200 font-bold">Login</Link> {/* Added font-bold */}
+              <Link to="/signup" className="block py-1 hover:text-gray-200 font-bold">Signup</Link> {/* Added font-bold */}
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   );

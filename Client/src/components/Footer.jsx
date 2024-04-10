@@ -31,7 +31,7 @@ function Footer() {
         <span>&copy; {new Date().getFullYear()} Trip Junkie</span>
         <a href="/privacy-policy" style={linkStyle}>Privacy Policy</a>
         <a href="/terms-of-service" style={linkStyle}>Terms of Service</a>
-        <a href="/contact-us" style={linkStyle}>Contact Us</a>
+        <a href="/contact-us" style={linkStyle}>Contact</a>
       </div>
     </footer>
   );

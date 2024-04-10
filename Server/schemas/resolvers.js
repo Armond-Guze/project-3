@@ -4,11 +4,12 @@ const { signToken } = require("../utils/auth.js");
 
 module.exports = {
     Query: {
-        me: (parent, args, context) => {
-            if (!context.user) {
-                throw new AuthenticationError('Must be logged in');
+        me: async (parent, args, context) => {
+            if (context.user) {
+                const userData = User.findOne({_id: context.user._id}).populate('favoriteDestination');
+                return userData
             }
-            return User.findById(context.user.id);
+            throw new AuthenticationError('Must be logged in');
         }
     },
     Mutation: {

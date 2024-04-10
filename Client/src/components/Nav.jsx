@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlane, faBars } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import auth from "../utils/auth";
 
 const Nav = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -50,18 +51,27 @@ const Nav = () => {
           >
             Contact
           </Link>
-          <Link
-            to="/login"
-            className="text-white text-lg mr-6 hover:text-gray-200"
-          >
-            Login
-          </Link>
-          <Link
-            to="/signup"
-            className="text-white text-lg mr-6 hover:text-gray-200"
-          >
-            Signup
-          </Link>
+          {
+            auth.loggedIn() ? <Link
+              onClick={() => auth.logout()}
+              className="text-white text-lg mr-6 hover:text-gray-200"
+            >
+              Logout
+            </Link> : <>
+              <Link
+                to="/login"
+                className="text-white text-lg mr-6 hover:text-gray-200"
+              >
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                className="text-white text-lg mr-6 hover:text-gray-200"
+              >
+                Signup
+              </Link></>
+          }
+
         </div>
         <div className="md:hidden">
           <FontAwesomeIcon

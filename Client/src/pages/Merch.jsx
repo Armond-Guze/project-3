@@ -8,8 +8,8 @@ const MerchPage = () => {
         <div className="md:flex">
           <div className="md:flex-shrink-0">
             <img
-              className="h-48 w-full object-cover md:h-full md:w-48"
-              src={logohoodietripjunkieImage} // Corrected usage of the image variable
+              className="h-96 w-full object-cover md:h-full md:w-96" // Adjusted height and width
+              src={logohoodietripjunkieImage}
               alt="Trip Junkie Hoodie"
             />
           </div>

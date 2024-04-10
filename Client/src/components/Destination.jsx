@@ -30,9 +30,8 @@ const Destination = ({ onCityClick }) => {
       <div className="grid grid-cols-3 gap-4">
         {randomDestinations.slice(0, 6).map((destination, index) => (
           <div key={index} onClick={() => onCityClick(destination.name)}>
-            <div className="bg-white rounded-lg shadow-lg p-6 cursor-pointer">
+            <div className="bg-white rounded-lg shadow-lg p-6 cursor-pointer transition duration-500 transform hover:bg-blue-200 hover:text-black">
               <h3 className="text-xl font-semibold mb-2">{destination.name}</h3>
-              {/* Add other properties as needed */}
             </div>
           </div>
         ))}
@@ -42,4 +41,3 @@ const Destination = ({ onCityClick }) => {
 };
 
 export default Destination;
-

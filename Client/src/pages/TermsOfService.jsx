@@ -2,7 +2,7 @@ import React from "react";
 
 function TermsOfService() {
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md border border-gray-400">
+    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md border border-gray-400 mt-4">
       <h1 className="text-2xl font-bold mb-4">Terms of Service</h1>
       <p className="text-lg">
         Please read these terms of service ("terms", "terms of service")

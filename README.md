@@ -1,4 +1,4 @@
-# React + Vite
+# Trip Junkie
 
 Trip Junkie is your ultimate destination for discovering top trending travel destinations, checking their weather, and planning your next adventure!
 
@@ -47,5 +47,6 @@ When I click on book destination then I am redirected to it's booking purchase s
 - react
 - vite
 - tailwind
+```
 
 Deployed Application: https://trip-junkie-f71816465bac.herokuapp.com/

@@ -1,5 +1,18 @@
 # React + Vite
 
+Trip Junkie is your ultimate destination for discovering top trending travel destinations, checking their weather, and planning your next adventure!
+
+Whether you're dreaming of sunny beaches, snowy mountains, or bustling cities, we've got you covered.
+
+Start exploring now and turn your travel dreams into reality! 
+
+## Description 
+
+Planning on taking a trip? Trip Junkie is the location for you! Our application allows users to search and favorite desired locations. 
+
+Trending locations are displayed for simplicity and name any location on earth and you are able to see the weather and adjust your trip accordingly! 
+
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
@@ -34,3 +47,5 @@ When I click on book destination then I am redirected to it's booking purchase s
 - react
 - vite
 - tailwind
+
+Deployed Application: https://trip-junkie-f71816465bac.herokuapp.com/

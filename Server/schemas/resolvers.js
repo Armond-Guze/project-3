@@ -64,7 +64,7 @@ module.exports = {
                 user.likedDestinations.push(destinationId);
                 await user.save();
 
-                // Return the liked destination along with any other data you want
+                // Return the liked destination along with any other data wanted
                 return destination;
             } catch (error) {
                 console.error('Error liking destination:', error);

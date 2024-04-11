@@ -39,7 +39,7 @@ function Weather({ searchedCity }) {
         { name: "Destination 1" },
         { name: "Destination 2" },
         { name: "Destination 3" }
-      ]); // Replace with your actual logic to fetch destinations
+      ]); 
     }
   }, [weatherData]);
 
